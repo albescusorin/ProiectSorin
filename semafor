@@ -1,0 +1,80 @@
+/* ========================================
+ *
+ * Copyright YOUR COMPANY, THE YEAR
+ * All Rights Reserved
+ * UNPUBLISHED, LICENSED SOFTWARE.
+ *
+ * CONFIDENTIAL AND PROPRIETARY INFORMATION
+ * WHICH IS THE PROPERTY OF your company.
+ *
+ * ========================================
+*/
+#include "project.h"
+
+uint8_t pinState;
+
+int main(void)
+{
+    CyGlobalIntEnable; /* Enable global interrupts. */
+    int timpMasini;
+/*    Pin_1_Write(0x01);
+    Pin_2_Write(0x00);
+    Pin_3_Write(0x01);
+    Pin_4_Write(0x01);
+    Pin_5_Write(0x01);
+    Pin_6_Write(0x01);
+    Pin_7_Write(0x01);
+    Pin_8_Write(0x01);
+    
+    /* Place your initialization/startup code here (e.g. MyInst_Start()) */
+//    Pin_Red_Write(0x00);
+    
+    
+    for(;;)
+    {
+       
+/*        pinState = Pin_buton_Read();
+        if (pinState == 0)
+        {
+            Pin_Red_Write(0x01);
+        }else if(pinState == 1){
+            Pin_Red_Write(0x00);
+        }    
+       
+        /* Place your application code here. */
+        
+        timpMasini = 20;
+        
+        Pin_RM_Write(0x01);
+        Pin_VP_Write(0x01);
+        CyDelay (5000);
+        for(int i=0; i<10; i++)
+        {
+            Pin_VP_Write(~ Pin_VP_Read ());
+            CyDelay (500);
+        }
+      
+        Pin_VP_Write(0x00);
+        Pin_RM_Write(0x00);
+        
+        for(int j=0; j<1000; j++)
+        {
+            Pin_VM_Write(0x01);
+            Pin_RP_Write(0x01);
+            
+            pinState = Pin_buton_Read();
+            if (pinState == 0)
+            {
+                if(j<800){
+                    timpMasini = 2;
+                }
+            }    
+            CyDelay (timpMasini);
+            Pin_VM_Write(0x00);
+            Pin_RP_Write(0x00);
+        }
+        
+    }
+}
+
+/* [] END OF FILE */
