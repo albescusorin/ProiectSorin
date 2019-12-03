@@ -1,0 +1,65 @@
+#include "project.h"
+#define SEMAPHORE_ON    (0x01)
+#define SEMPAHORE_OFF   (0x00)
+uint32_t time=0;
+
+/*
+CY_ISR(Timer_ISR){
+    timer_isr_ClearPending();
+    Timer_ReadStatusRegister();
+//    Pin_1_Write(!Pin_1_Read());
+    //timp++;
+}
+*/
+
+CY_ISR(Buton_Handler)
+{
+    time = 0;
+    Buton_ClearInterrupt();
+}
+
+int main(void)
+{
+    CyGlobalIntEnable;
+    
+    Timer_Start();
+    timer_isr_Start();
+    Buton_int_StartEx ( Buton_Handler );
+    
+    LCD_Start();
+    LCD_PrintString("AAA");
+
+    for(;;)
+    {
+        while(time<4)
+        {
+            if(time == 0)
+            {
+                RP_Write(SEMPAHORE_OFF);
+                VP_Write(SEMAPHORE_ON);
+                RM_Write(SEMAPHORE_ON);
+                VM_Write(SEMPAHORE_OFF);
+            }
+            
+            if(time == 2)
+            {
+                RP_Write(SEMAPHORE_ON);
+                VP_Write(SEMPAHORE_OFF);
+                RM_Write(SEMPAHORE_OFF);
+                VM_Write(SEMAPHORE_ON);
+            }
+        }
+        time=0;
+    }
+}
+
+/* [] END OF FILE */
+/*
+if(time%5==0)
+        { 
+            RP_Write ( ~RP_Read ());
+            VP_Write ( ~VP_Read ());
+            RM_Write ( ~RM_Read ());
+            VM_Write ( ~VM_Read ());
+        }
+*/
